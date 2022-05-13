@@ -1,4 +1,4 @@
-package hello.core.member;
+package member;
 
 public interface MemberService {
     //회원 가입 메서드
