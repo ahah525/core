@@ -6,11 +6,15 @@ import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService{
+    // 인터페이스에만 의존하도록 변경(DIP 만족)
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
 
-    // MemoryMemberRepository & FixDiscountPolicy 를 구현체로 생성
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-    // 인터페이스에만 의존하도록 변경
-    private DiscountPolicy discountPolicy;
+    // 의존성 주입(DI)
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {

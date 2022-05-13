@@ -1,10 +1,14 @@
 package hello.core.member;
 
 public class MemberServiceImpl implements MemberService{
-    
-    // 가입과 조회를 하기 위해 MemberRepository의 구현체를 생성
-    // MemberServiceImpl은 MemberRepository, MemoryMemberRepository 모두 의존(DIP 위반)
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    // MemberServiceImpl 은 MemberRepository 인터페이스에만 의존
+    private final MemberRepository memberRepository;
+
+    // 의존성 주입(DI)
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
     @Override
     public void join(Member member) {
         memberRepository.save(member);
