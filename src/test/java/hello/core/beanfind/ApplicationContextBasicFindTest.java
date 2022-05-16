@@ -44,7 +44,6 @@ public class ApplicationContextBasicFindTest {
     @Test
     @DisplayName("빈 이름으로 조회X")
     void findBeanByNameX() {
-        // ac.getBean("xxxxx", MemberService.class);
         // 오른쪽 로직을 실행했을 때 왼쪽 예외가 터져야 테스트 성공
         assertThrows(NoSuchBeanDefinitionException.class,
                 () -> ac.getBean("xxxxx", MemberService.class));
