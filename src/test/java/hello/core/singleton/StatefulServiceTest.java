@@ -16,7 +16,7 @@ class StatefulServiceTest {
         ApplicationContext ac = new AnnotationConfigApplicationContext(TestConfig.class);
         StatefulService statefulService1 = ac.getBean(StatefulService.class);
         StatefulService statefulService2 = ac.getBean(StatefulService.class);
-        
+
         // ThreadA: A사용자 10000원 주문
         statefulService1.order("userA", 10000);
         // ThreadB: B사용자 20000원 주문
@@ -25,7 +25,7 @@ class StatefulServiceTest {
         // ThreadA: 사용자A 주문 금액 조회
         int price = statefulService1.getPrice();
         System.out.println("price = " + price);     // 20000원 출력(중간에 사용자B가 price를 바꾸었기 때문)
-        
+
         // A사용자 주문 금액이 20000원인지 검증
         assertThat(statefulService1.getPrice()).isEqualTo(20000);
     }
