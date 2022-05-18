@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderServiceImpl implements OrderService{
-    // 인터페이스에만 의존하도록 변경(DIP 만족)
+    // 생성자 주입을 쓰면 final 키워드를 사용해 생성자에서 초기화 누락을 방지, 불변하도록 설계O
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
-    // 의존관계 자동 주입(DI)
+    // 생성자 주입
     @Autowired   // 생성자가 1개일 때 @Autowired 생략O
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
