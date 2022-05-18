@@ -13,7 +13,7 @@ public class OrderServiceImpl implements OrderService{
     private final DiscountPolicy discountPolicy;
 
     // 의존관계 자동 주입(DI)
-    @Autowired  // ac.getBean(MemberRepository.class), ac.getBean(DiscountPolicy.class)
+    @Autowired   // 생성자가 1개일 때 @Autowired 생략O
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
