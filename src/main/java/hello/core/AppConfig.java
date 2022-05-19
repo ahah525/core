@@ -37,6 +37,7 @@ public class AppConfig {
         System.out.println("call AppConfig.orderService");
         // 생성자 주입
         return new OrderServiceImpl(memberRepository(), discountPolicy());
+        //return null;
     }
 
     // DiscountPolicy 역할 스프링 빈 등록

@@ -8,11 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor    // final이 붙은 필드를 파라미터로 갖는 생성자 자동으로 생성
+//@RequiredArgsConstructor    // final이 붙은 필드를 파라미터로 갖는 생성자 자동으로 생성
 public class OrderServiceImpl implements OrderService{
     // 생성자 주입을 쓰면 final 키워드를 사용해 생성자에서 초기화 누락을 방지, 불변하도록 설계O
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
+
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
