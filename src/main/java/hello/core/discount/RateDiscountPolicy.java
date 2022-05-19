@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Primary    // 우선권 부여
+//@Qualifier("mainDiscountPolicy")
 public class RateDiscountPolicy implements DiscountPolicy{
 
     private int discountPercent = 10;    // 할인율(10%)
