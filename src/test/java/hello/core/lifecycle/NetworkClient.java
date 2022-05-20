@@ -1,6 +1,9 @@
 package hello.core.lifecycle;
 
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 // 가상 네트워크 클라이언트
 public class NetworkClient {
 
@@ -32,6 +35,7 @@ public class NetworkClient {
     }
 
     // 초기화 메서드(의존관계 주입이 끝나면 호출)
+    @PostConstruct
     public void init() {
         System.out.println("NetworkClient.init");
         connect();
@@ -39,6 +43,7 @@ public class NetworkClient {
     }
 
     // 소멸 메서드(빈이 종료될 때 호출)
+    @PreDestroy
     public void close(){
         System.out.println("NetworkClient.close");
         disConnect();
