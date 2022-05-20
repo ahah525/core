@@ -25,12 +25,12 @@ public class AllBeanTest {
 
         DiscountService discountService = ac.getBean(DiscountService.class);
         Member member = new Member(1L, "userA", Grade.VIP);
-        int discountPrice = discountService.discount(member, 10000, "fixDiscountPolicy");
+        int fixDiscountPrice = discountService.discount(member, 10000, "fixDiscountPolicy");
 
         // DiscountService 스프링 빈 잘 등록됐는지 검증
         assertThat(discountService).isInstanceOf(DiscountService.class);
         // 할인 금액이 1000원이 맞는지 검증
-        assertThat(discountPrice).isEqualTo(1000);
+        assertThat(fixDiscountPrice).isEqualTo(1000);
 
         int rateDiscountPrice = discountService.discount(member, 20000, "rateDiscountPolicy");
         // 할인 금액이 2000원이 맞는지 검증
