@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.inject.Provider;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -67,13 +68,13 @@ public class SingletonWithPrototypeTest1 {
     @Scope("singleton") // 생략O
     static class ClientBean {
 
-        // 필드 주입
+        // javax.inject
         @Autowired
-        private ObjectProvider<PrototypeBean> prototypeBeanProvider;
+        private Provider<PrototypeBean> prototypeBeanProvider;
         
         public int logic() {
             // logic() 호출할 때마다 프로토타입 빈을 대신 조회해서 반환(DL)
-            PrototypeBean prototypeBean = prototypeBeanProvider.getObject();
+            PrototypeBean prototypeBean = prototypeBeanProvider.get();
             prototypeBean.addCount();   // prototypeBean 의 addCount() 호출
             int count = prototypeBean.getCount();
             return count;   // 카운트 반환
