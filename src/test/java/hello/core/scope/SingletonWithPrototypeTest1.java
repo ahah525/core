@@ -1,7 +1,9 @@
 package hello.core.scope;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
 
@@ -44,18 +46,34 @@ public class SingletonWithPrototypeTest1 {
         assertThat(count2).isEqualTo(2);
     }
 
+    // ObjectProvider 사용
+    @Test
+    void providerTest() {
+        // ClientBean, PrototypeBean 빈 등록
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(ClientBean.class, PrototypeBean.class);
+
+        // 클라이언트 요청1
+        ClientBean clientBean1 = ac.getBean(ClientBean.class);
+        int count1 = clientBean1.logic();
+        assertThat(count1).isEqualTo(1);
+
+        // 클라이언트 요청2
+        ClientBean clientBean2 = ac.getBean(ClientBean.class);
+        int count2 = clientBean2.logic();
+        assertThat(count2).isEqualTo(1);
+    }
+
     // 싱글톤 빈
     @Scope("singleton") // 생략O
     static class ClientBean {
-        private final PrototypeBean prototypeBean;  // ClientBean 생성 시점에 주입
 
-        // prototypeBean 의존관계 주입
-        @Autowired  // 생략O
-        ClientBean(PrototypeBean prototypeBean) {
-            this.prototypeBean = prototypeBean;
-        }
-
+        // 필드 주입
+        @Autowired
+        private ObjectProvider<PrototypeBean> prototypeBeanProvider;
+        
         public int logic() {
+            // logic() 호출할 때마다 프로토타입 빈을 대신 조회해서 반환(DL)
+            PrototypeBean prototypeBean = prototypeBeanProvider.getObject();
             prototypeBean.addCount();   // prototypeBean 의 addCount() 호출
             int count = prototypeBean.getCount();
             return count;   // 카운트 반환
