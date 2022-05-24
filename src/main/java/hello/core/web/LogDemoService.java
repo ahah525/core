@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor    // 자동 생성자 주입
 public class LogDemoService {
 
-    private final MyLogger myLogger;    //
+    private final MyLogger myLogger;
     public void logic(String id) {
         myLogger.log("service id = " + id);
     }

@@ -7,18 +7,20 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.UUID;
 
+// 로그 출력 클래스
 @Component
-@Scope(value = "request")
+@Scope(value = "request")   // request 스코프로 지정
 public class MyLogger {
 
-    private String uuid;
-    private String requestURL;
+    private String uuid;        // HTTP 요청을 구분하기 위한 id
+    private String requestURL;  // 실제 요청한 URL
 
-    // 외부에서 주입
+    // requestURL 외부에서 주입
     public void setRequestURL(String requestURL) {
         this.requestURL = requestURL;
     }
 
+    // 로그 출력 메서드
     public void log(String message) {
         System.out.println("[" + uuid + "]" + "[" + requestURL + "] " + message);
     }
@@ -26,7 +28,7 @@ public class MyLogger {
     // 초기화 메서드
     @PostConstruct
     public void init() {
-        String uuid = UUID.randomUUID().toString(); // 전세계 유일한 id 생성
+        uuid = UUID.randomUUID().toString(); // 전세계 유일한 id를 생성해서 저장
         System.out.println("[" + uuid + "] request scope bean create:" + this);
     }
 
